@@ -3,12 +3,26 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link as RouterLink } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Link as RouterLink, useNavigation } from "react-router-dom";
 
 import "./App.css";
 import { Outlet } from "react-router-dom";
 
+export function Loading() {
+  return (
+    <div>
+      <div>
+        <CircularProgress />
+      </div>
+      <div>Loading...</div>
+    </div>
+  );
+}
+
 const App = () => {
+  const navigation = useNavigation();
+
   return (
     <>
       {/* https://mui.com/material-ui/react-app-bar/ */}
@@ -26,9 +40,7 @@ const App = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <div>
-        <Outlet />
-      </div>
+      <div>{navigation.state === "loading" ? <Loading /> : <Outlet />}</div>
     </>
   );
 };
